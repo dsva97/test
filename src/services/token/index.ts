@@ -4,16 +4,15 @@ import { TokenData, TokenDto } from "./types";
 
 const API = API_ROOT + "/api/Token/CrearToken";
 
-export const request = async (data: TokenDto): Promise<TokenData> => {
+const request = async (data: TokenDto): Promise<TokenData> => {
   try {
-    const response = await axios({
-      method: "POST",
-      url: API,
-      data,
-    });
+    const response = await axios.post(API, data);
     const result = response.data as TokenData;
     return result;
   } catch (e) {
+    console.error(e);
     throw new Error("Error en la solicitud");
   }
 };
+
+export default request;

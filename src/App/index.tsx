@@ -1,8 +1,9 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useLocalStorage } from "use-hooks";
 
-import { Login, Registry } from "../views";
+import { Login, Dashboard } from "../views";
+import { PrivateRoute, IntoRoute } from "../components";
 
 import { IStore } from "./store";
 
@@ -20,8 +21,8 @@ const App = () => {
   return (
     <AppContext.Provider value={{ store, setStore }}>
       <BrowserRouter>
-        <Route exact path="/" component={Login} />
-        <Route path="/registry" component={Registry} />
+        <IntoRoute path="/login" component={<Login />} />
+        <PrivateRoute path="/dashboard" component={<Dashboard />} />
       </BrowserRouter>
     </AppContext.Provider>
   );

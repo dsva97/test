@@ -1,44 +1,32 @@
 import React, { useContext, useState } from "react";
+import serviceToken from "../../services/token";
 import { Button, TextField } from "@material-ui/core";
 
 import classes from "./style.module.css";
 import { AppContext } from "../../App";
 
-const API_ROOT = process.env.REACT_APP_API as string;
-const API = API_ROOT + "/api/Token/CrearToken";
-interface ResponseApi {
-  token: string;
-  expiracion: string;
-}
-
 export const Login = () => {
   const [value, setValue] = useState("");
   const { store, setStore } = useContext(AppContext);
   const setLogin = () => {
-    const body = JSON.stringify({
+    serviceToken({
       idtoken: 0,
       usuario: value,
-    });
-    console.log(body);
-    fetch(API, {
-      method: "POST",
-      mode: "no-cors",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body,
     })
-      .then((res) => res.json())
-      .then((res: ResponseApi) => {
-        console.log(res);
+      .then((res) => {
         const { token, expiracion } = res;
         setStore({ ...store, usuario: value, token, expiracion });
+        setValue("");
       })
       .catch(console.error);
   };
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setLogin();
+  };
   return (
     <div className={classes.container}>
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" onSubmit={handleSubmit}>
         <h1>Colegio Los Shapis</h1>
         <p>Para acceder a los registros primero debes identificarte.</p>
         <TextField
@@ -47,7 +35,7 @@ export const Login = () => {
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
-        <Button variant="contained" color="primary" onClick={setLogin}>
+        <Button variant="contained" color="primary" type="submit">
           Ingresar
         </Button>
         <span>🕵</span>
