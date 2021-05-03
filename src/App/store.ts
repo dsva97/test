@@ -2,6 +2,6 @@ import { CursoDto } from "../interfaces/courses";
 
 export interface IStore {
   usuario?: string;
-  cursos: CursoDto[];
+  cursos?: CursoDto[];
   token?: string | number;
 }
