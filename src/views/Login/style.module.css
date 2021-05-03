@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.container,
+.container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container form {
+  max-width: 300px;
+  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 1em;
+}
